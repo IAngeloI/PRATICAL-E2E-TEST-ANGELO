@@ -2,7 +2,7 @@
 
 ## 📝 Descrição
 
-Este documento contém informações sobre os testes automatizados realizados no projeto, incluindo os cenários testados e os bugs encontrados.
+Este documento contém informações sobre os testes automatizados extras realizados no projeto, incluindo os cenários testados e os bugs encontrados.
 
 ---
 
@@ -30,8 +30,8 @@ Este documento contém informações sobre os testes automatizados realizados no
 
 | ID  | Cenário em que ocorreu | Descrição | Passos para reproduzir | Severidade | Status |
 |-----|--------------------------|------------|---------------------|------------|--------|
-| 01  | Usuário `error_user` tentando remover um item do carrinho | Ao clicar em "Remover", o item não é removido e um erro `(uncaught exception)Error: Failed to remove item from cart.` é lançado | 1. Logar como `error_user` <br> 2. Adicionar um item ao carrinho a partir da página de produtos <br> 3. Tentar remover o item | Alta | Aberto |
-| 02  | Usuário `error_user` tentando ordenar os produtos | A ordenação não muda, mesmo ao selecionar uma nova opção | 1. Logar como `error_user` <br> 2. Selecionar uma opção de ordenação <br> 3. Verificar que a ordem permanece a mesma | Alta | Aberto |
-| 03  | Usuário `error_user` clicando em um produto | A descrição do produto muda ao clicar nele | 1. Logar como `error_user` <br> 2. Pegar a descrição de um item na tela principal <br> 3. Clicar no item <br> 4. Verificar que a descrição é diferente | Média | Aberto |
+| 01  | Usuário `error_user` tentando remover um item do carrinho | Ao clicar em "Remover", o item não é removido e um erro `(uncaught exception)Error: Failed to remove item from cart.` é lançado | 1. Logar como `error_user` <br> 2. Adicionar um item ao carrinho a partir da página de produtos <br> 3. Tentar remover o item | <span style="color:red">Alta</span> | Aberto |
+| 02  | Usuário `error_user` tentando ordenar os produtos | A ordenação não muda, mesmo ao selecionar uma nova opção | 1. Logar como `error_user` <br> 2. Selecionar uma opção de ordenação <br> 3. Verificar que a ordem permanece a mesma | <span style="color:red">Alta</span> | Aberto |
+| 03  | Usuário `error_user` clicando em um produto | A descrição do produto muda ao clicar nele | 1. Logar como `error_user` <br> 2. Pegar a descrição de um item na tela principal <br> 3. Clicar no item <br> 4. Verificar que a descrição é diferente | <span style="color:orange">Média</span> | Aberto |
 
 ---
