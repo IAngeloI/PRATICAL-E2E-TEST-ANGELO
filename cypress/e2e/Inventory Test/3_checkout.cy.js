@@ -8,14 +8,6 @@ describe("Inventory - Products", () => {
     doSignIn(users.standard_user);
   });
 
-  it.skip("Should do checkout with the correct flow");
-
-  it.skip(
-    "Should select some products, go to cart, and go back to continue shopping"
-  );
-
-  it.skip("Should not continue checkout with empty delivery information");
-
   it("Should do checkout with the correct flow", () => {
     cy.get('[data-test="inventory-item"]')
       .first()
@@ -26,6 +18,7 @@ describe("Inventory - Products", () => {
 
     cy.get('[data-test="add-to-cart-sauce-labs-backpack"]')
       .should("be.visible")
+      .and("be.enabled")
       .click();
 
     cy.get('[data-test="shopping-cart-link"]')
@@ -33,8 +26,8 @@ describe("Inventory - Products", () => {
       .click();
 
     cy.get('[data-test="title"]').should("be.visible");
-    cy.get('[data-test="cart-quantity-label"]');
-    cy.get('[data-test="cart-desc-label"]')
+    cy.get('[data-test="cart-quantity-label"]').should("be.visible");
+    cy.get('[data-test="cart-desc-label"]').should("be.visible");
   
     cy.get('[data-test="inventory-item"]').should("be.visible");
   
@@ -49,9 +42,10 @@ describe("Inventory - Products", () => {
 
     cy.get('[data-test="checkout"]')
       .should("be.visible")
+      .and("be.enabled")
       .click();
 
-    cy.url("eq", "https://www.saucedemo.com/checkout-step-one.html")
+    cy.url("eq", "https://www.saucedemo.com/checkout-step-one.html");
 
 
 // Fill in user information
@@ -72,6 +66,7 @@ describe("Inventory - Products", () => {
 
     cy.get('[data-test="continue"]')
       .should("be.visible")
+      .and("be.enabled")
       .click();
 
 // Verify checkout summary information
@@ -87,9 +82,10 @@ describe("Inventory - Products", () => {
 
     cy.get('[data-test="finish"]')      
       .should("be.visible")
+      .and("be.enabled")
       .click();
 
- // Verify order completion
+ // Verify order completion - Success
 
     cy.get('[data-test="pony-express"]').should("be.visible");
     cy.get('[data-test="complete-text"]').should("be.visible");
@@ -108,6 +104,7 @@ describe("Inventory - Products", () => {
 
       cy.get('[data-test="add-to-cart-sauce-labs-backpack"]')
         .should("be.visible")
+        .and("be.enabled")
         .click();
 
       cy.get('[data-test="remove-sauce-labs-backpack"]').should("be.visible");
@@ -120,11 +117,12 @@ describe("Inventory - Products", () => {
 
       cy.get('[data-test="continue-shopping"]')
         .should("be.visible")
+        .and("be.enabled")
         .click();
 
-      cy.contains("Products");
-
       cy.url().should("eq", "https://www.saucedemo.com/inventory.html");
+
+      cy.contains("Products");
 
       cy.get('[data-test="inventory-item"]')
         .last()
@@ -132,6 +130,7 @@ describe("Inventory - Products", () => {
 
       cy.get('[data-test="add-to-cart-test.allthethings()-t-shirt-(red)"]')
         .should("be.visible")
+        .and("be.enabled")
         .click();
 
       cy.get('[data-test="remove-test.allthethings()-t-shirt-(red)"]').should("be.visible");
@@ -158,12 +157,14 @@ describe("Inventory - Products", () => {
     it("Should not continue checkout with empty delivery information", () => {
       cy.get('[data-test="inventory-item"]')
         .first()
+        .should("be.visible")
         .click();
 
       cy.get(".inventory_item_desc").should("be.visible");
 
       cy.get('[data-test="add-to-cart-sauce-labs-backpack"]')
         .should("be.visible")
+        .and("be.enabled")
         .click();
 
       cy.get('[data-test="shopping-cart-link"]')
@@ -172,6 +173,7 @@ describe("Inventory - Products", () => {
 
       cy.get('[data-test="checkout"]')
         .should("be.visible")
+        .and("be.enabled")
         .click();
 
       cy.get('[data-test="continue"]')

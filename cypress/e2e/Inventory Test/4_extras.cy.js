@@ -4,13 +4,18 @@ import { doSignIn } from "./Utils";
 describe("Extras - Login", () => {
   beforeEach(() => {
     cy.visit(url);
+
+    cy.url().should("eq", "https://www.saucedemo.com/");
   });
 
   it("Should not login without username", () => {
-    cy.get('[data-test="password"]').type(users.standard_user.password);
+    cy.get('[data-test="password"]')
+      .type(users.standard_user.password)
+      .should("have.value", users.standard_user.password);
 
     cy.get('[data-test="login-button"]')
       .should("be.visible")
+      .and("be.enabled")
       .click();
 
     cy.get('[data-test="error"]').should("be.visible");
@@ -29,16 +34,28 @@ describe("Extras - Login", () => {
   });
 
   it("Should not login without password", () => {
-    cy.get('[data-test="username"]').type(users.standard_user.username);
+    cy.get('[data-test="username"]')
+      .type(users.standard_user.username)
+      .should("have.value", users.standard_user.username);
 
     cy.get('[data-test="login-button"]')
       .should("be.visible")
+      .and("be.enabled")
       .click();
 
-    cy.contains("div", "Epic sadface: Password is required").should(
-      "be.visible"
-    );
-
+      cy.get('[data-test="error"]').should("be.visible");
+      cy.get('.error-message-container').should("be.visible");
+      cy.get('[data-test="error-button"]').should("be.visible");
+  
+      cy.get('[data-test="username"]').should('have.class', 'error');
+      cy.get('[data-test="username"]').should(
+        'have.css', 'border-bottom-color', 'rgb(226, 35, 26)'
+      );
+  
+      cy.get('[data-test="password"]').should('have.class', 'error');
+      cy.get('[data-test="password"]').should(
+        'have.css', 'border-bottom-color', 'rgb(226, 35, 26)'
+      );
   });
 });
 
@@ -366,7 +383,7 @@ describe("error_user test", () => {
 
   })
 
-  it.only("Should detect incorrect product description for error_user", () => {
+  it("Should detect incorrect product description for error_user", () => {
 
     cy.get(".inventory_item")
       .first()

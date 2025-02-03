@@ -8,12 +8,6 @@ describe("Inventory - Products", () => {
     doSignIn(users.standard_user);
   });
 
-  it.skip("Should see the product details and add to cart");
-
-  it.skip("Should sort products by price properly (high to low)");
-
-  it.skip("Should sort products by price properly (low to high)");
-
   it("Should see the product details and add to cart", () => {
     cy.get('[data-test="inventory-item-name"]')
       .first()
@@ -24,6 +18,7 @@ describe("Inventory - Products", () => {
 
     cy.get('[data-test="add-to-cart"]')
       .should("be.visible")
+      .and("be.enabled")
       .click();
 
     cy.get('[data-test="remove"]').should("be.visible");
@@ -33,11 +28,13 @@ describe("Inventory - Products", () => {
       .and("be.visible")
       .and("have.text", "1");
 
-    cy.get('[data-test="shopping-cart-link"]').should("be.visible").click();
+    cy.get('[data-test="shopping-cart-link"]')
+      .should("be.visible")
+      .click();
 
     cy.get('[data-test="title"]').should("be.visible");
-    cy.get('[data-test="cart-quantity-label"]');
-    cy.get('[data-test="cart-desc-label"]')
+    cy.get('[data-test="cart-quantity-label"]').should("be.visible");
+    cy.get('[data-test="cart-desc-label"]').should("be.visible");
 
     cy.get('[data-test="inventory-item"]').should("be.visible");
 
@@ -62,11 +59,7 @@ describe("Inventory - Products", () => {
         parseFloat(price.innerText.replace("$", ""))
       );
 
-      console.log("Float Price: ", prices);
-
       const sortedPrices = [...prices].sort((a, b) => b - a);
-
-      console.log("Sorted prices: ", sortedPrices);
 
       // Compare extracted prices with expected order
       expect(prices).to.deep.equal(sortedPrices);

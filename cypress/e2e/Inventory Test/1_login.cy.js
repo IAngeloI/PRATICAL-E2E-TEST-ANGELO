@@ -11,16 +11,6 @@ describe("Inventory - Login", () => {
     cy.contains("Products");
   });
 
-  it.skip("Should login with valid credentials and do logout");
-
-  it.skip("Should not login with invalid credentials");
-
-  it.skip('Should not allow "locked_out_user" do sign in');
-
-  it.skip(
-    'Should login with "performance_glitch_user" and wait the products page loads'
-  );
-
   beforeEach(() => {
 
     cy.visit(url);
@@ -40,6 +30,7 @@ describe("Inventory - Login", () => {
 
     cy.get('[data-test="login-button"]')
       .should("be.visible")
+      .and("be.enabled")
       .click();
 
     cy.contains("Products");
@@ -48,9 +39,9 @@ describe("Inventory - Login", () => {
 
     cy.get('[data-test="inventory-container"]').should("be.visible")
 
-
-    cy.get('#react-burger-menu-btn')
+    cy.get("#react-burger-menu-btn")
       .should("be.visible")
+      .and("be.enabled")
       .click();
 
     cy.get('[data-test="logout-sidebar-link"]')
@@ -60,7 +51,7 @@ describe("Inventory - Login", () => {
 
     cy.url().should("eq", "https://www.saucedemo.com/");
 
-    cy.get('[data-test="login-button"]').should("be.visible")
+    cy.get('[data-test="login-button"]').should("be.visible");
   });
 
   it("Should not login with invalid credentials", () => {
@@ -75,6 +66,7 @@ describe("Inventory - Login", () => {
 
     cy.get('[data-test="login-button"]')
       .should("be.visible")
+      .and("be.enabled")
       .click();
 
 // Checking the error message components
@@ -102,11 +94,14 @@ describe("Inventory - Login", () => {
   });
 
   it('Should not allow "locked_out_user" do sign in', () => {
-    cy.get('[data-test="username"]').type(users.locked_out_user.username);
-    cy.get('[data-test="password"]').type(users.locked_out_user.password);
+    cy.get('[data-test="username"]').type(users.locked_out_user.username)
+      .should("have.value", users.locked_out_user.username);
+    cy.get('[data-test="password"]').type(users.locked_out_user.password)
+      .should("have.value", users.locked_out_user.password);
 
     cy.get('[data-test="login-button"]')
       .should('be.visible')
+      .and('be.enabled')
       .click();
 
 //  Checking the error message components
@@ -141,7 +136,7 @@ describe("Inventory - Login", () => {
       users.performance_glitch_user.password
     );
 
-    cy.contains("input", "Login")
+    cy.get('[data-test="login-button"]')
       .should("be.visible")
       .click();
 
@@ -161,9 +156,9 @@ describe("Inventory - Login", () => {
       cy.wrap($el).find(".inventory_item_desc").should("be.visible");
       cy.wrap($el).find(".inventory_item_price").should("be.visible");
 
-    cy.wrap($el)
-      .find('[data-test^="add-to-cart"], [data-test^="remove"]')
-      .should("be.visible")
+      cy.wrap($el)
+        .find('[data-test^="add-to-cart"], [data-test^="remove"]')
+        .should("be.visible")
     })
   });
 });
